@@ -121,6 +121,7 @@ static BOOL _disableLongPressGestureOnEvent;
     self.readReceiptsAlignment = ReadReceiptAlignmentLeft;
     _allTextHighlighted = NO;
     _isAutoAnimatedGif = NO;
+    _temperaryContentViewConstraints = [[NSMutableArray alloc] init];
 }
 
 - (void)awakeFromNib
@@ -1067,6 +1068,11 @@ static BOOL _disableLongPressGestureOnEvent;
     _isAutoAnimatedGif = NO;
     
     [self resetConstraintsConstantToDefault];
+    
+    if (_temperaryContentViewConstraints) {
+        [self.contentView removeConstraints:_temperaryContentViewConstraints];
+        [_temperaryContentViewConstraints removeAllObjects];
+    }
 }
 
 - (BOOL)shouldInteractWithURL:(NSURL *)URL urlItemInteraction:(UITextItemInteraction)urlItemInteraction associatedEvent:(MXEvent*)associatedEvent

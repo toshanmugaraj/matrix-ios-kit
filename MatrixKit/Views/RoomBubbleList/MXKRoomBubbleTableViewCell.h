@@ -232,6 +232,9 @@ extern NSString *const kMXKRoomBubbleCellUrlItemInteraction;
 @property (nonatomic) NSLayoutConstraint *readMarkerViewTrailingConstraint;
 @property (nonatomic) NSLayoutConstraint *readMarkerViewHeightConstraint;
 
+/** Resettable constraints*/
+@property (nonatomic) NSMutableArray *temperaryContentViewConstraints;
+
 /**
  The potential webview used to render an attachment (for example an animated gif).
  */
