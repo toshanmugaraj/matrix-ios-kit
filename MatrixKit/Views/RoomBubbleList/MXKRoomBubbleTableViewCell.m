@@ -947,9 +947,17 @@ static BOOL _disableLongPressGestureOnEvent;
     }
     else if (cell.messageTextView)
     {
-        // Update maximum width available for the textview
-        bubbleData.maxTextViewWidth = maxWidth - (cell.msgTextViewLeadingConstraint.constant + cell.msgTextViewTrailingConstraint.constant);
-        
+        // Update maximum width available for the textview // (RiotSettings.shared.bubbleStyle
+        if (MXKAppSettings.standardAppSettings.isBubbleStyle) {
+            if (bubbleData.isIncoming) {
+                bubbleData.maxTextViewWidth = maxWidth - (cell.msgTextViewLeadingConstraint.constant + 83 + 5);
+            } else {
+                bubbleData.maxTextViewWidth = maxWidth - (cell.msgTextViewTrailingConstraint.constant + 93 + 5);
+            }
+        } else {
+            bubbleData.maxTextViewWidth = maxWidth - (cell.msgTextViewLeadingConstraint.constant + cell.msgTextViewTrailingConstraint.constant);
+
+        }
         // Retrieve the suggested height of the message content
         rowHeight = bubbleData.contentSize.height;
         
@@ -960,7 +968,7 @@ static BOOL _disableLongPressGestureOnEvent;
         }
         
         // Finalize the row height by adding the top and bottom constraints of the message text view in cell
-        rowHeight += cell.msgTextViewTopConstraint.constant + cell.msgTextViewBottomConstraint.constant;
+        rowHeight += cell.msgTextViewTopConstraint.constant + cell.msgTextViewBottomConstraint.constant + 6;
     }
     
     return rowHeight;
