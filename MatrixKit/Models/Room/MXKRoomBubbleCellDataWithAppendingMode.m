@@ -230,15 +230,17 @@ static NSAttributedString *messageSeparator = nil;
         {
             for (MXKRoomBubbleComponent* component in bubbleComponents)
             {
-                if (!currentTextMsg)
-                {
-                    currentTextMsg = [NSMutableString stringWithString:component.textMessage];
-                }
-                else
-                {
-                    // Append text message
-                    [currentTextMsg appendString:@"\n"];
-                    [currentTextMsg appendString:component.textMessage];
+                if(component.textMessage) {
+                    if (!currentTextMsg)
+                    {
+                        currentTextMsg = [NSMutableString stringWithString:component.textMessage];
+                    }
+                    else
+                    {
+                        // Append text message
+                        [currentTextMsg appendString:@"\n"];
+                        [currentTextMsg appendString:component.textMessage];
+                    }
                 }
             }
         }

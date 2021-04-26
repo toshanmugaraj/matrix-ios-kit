@@ -2408,7 +2408,9 @@
     else
     {
         // Do a full reload
-        [_bubblesTableView reloadData];
+        if(self.view.window) {
+            [_bubblesTableView reloadData];
+        }
     }
     
     if (shouldScrollToBottom)

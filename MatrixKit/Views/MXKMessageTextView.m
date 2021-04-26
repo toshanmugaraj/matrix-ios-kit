@@ -20,6 +20,7 @@
 @interface MXKMessageTextView()
 
 @property (nonatomic, readwrite) CGPoint lastHitTestLocation;
+@property (nonatomic, readwrite) UIView *bubbleView;
 
 @end
 
@@ -52,6 +53,18 @@
     }
     
     return [self isThereALinkNearPoint:point];
+}
+
+-(id)initWithCoder:(NSCoder *)coder
+{
+    if ((self = [super initWithCoder:coder])) {
+
+    }
+    return self;
+}
+-(void)layoutSubviews {
+    [super layoutSubviews];
+
 }
 
 @end

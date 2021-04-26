@@ -90,6 +90,16 @@
     return self;
 }
 
+- (NSArray *)searchText:(NSString *)text {
+    NSMutableArray *events = [[NSMutableArray alloc] init];
+    for (MXKRoomBubbleComponent *item in bubbleComponents) {
+        if (item.textMessage && [item.textMessage rangeOfString:text  options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            [events addObject:item.event];
+        }
+    }
+    return [NSArray arrayWithArray:events];
+}
+
 - (void)dealloc
 {
     // Reset any observer on publicised groups by user.

@@ -148,4 +148,11 @@
  */
 - (MXKRoomBubbleComponent*)getFirstBubbleComponentWithDisplay;
 
+/**
+ Search for the matching text
+ 
+ @return Returns array events matching text or empty array
+ */
+- (NSArray *)searchText:(NSString *)text;
+
 @end

@@ -239,6 +239,7 @@ extern NSString *const kMXKRoomBubbleCellUrlItemInteraction;
  The potential webview used to render an attachment (for example an animated gif).
  */
 @property (nonatomic) WKWebView *attachmentWebView;
+@property (nonatomic) UILabel *timeLabel;
 
 /**
  Called during the designated initializer of the UITableViewCell class to set the default

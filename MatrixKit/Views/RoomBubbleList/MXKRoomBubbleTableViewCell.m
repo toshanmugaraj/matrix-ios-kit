@@ -609,33 +609,57 @@ static BOOL _disableLongPressGestureOnEvent;
                     [view removeFromSuperview];
                 }
                 
+                MXKRoomBubbleComponent *component = bubbleData.bubbleComponents.firstObject;
+                if (component && MXKAppSettings.standardAppSettings.isBubbleStyle) {
+                    if (!self.timeLabel) {
+                        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, component.position.y, self.bubbleInfoContainer.frame.size.width , 15)];
+                        self.timeLabel.translatesAutoresizingMaskIntoConstraints = NO;
+                        self.timeLabel.textColor = [UIColor lightGrayColor];
+                        self.timeLabel.font = [UIFont systemFontOfSize:11];
+                        self.timeLabel.adjustsFontSizeToFitWidth = NO;
+                        self.timeLabel.minimumScaleFactor = 0.6;
+                        [self.contentView addSubview:_timeLabel];
+                    }
+                    _timeLabel.text = [bubbleData.eventFormatter timeStringFromDate:component.date];
+                }
+                
                 for (MXKRoomBubbleComponent *component in bubbleData.bubbleComponents)
                 {
                     if (component.event.sentState != MXEventSentStateFailed)
                     {
                         CGFloat timeLabelOffset = 0;
-                        
-                        if (component.date && bubbleData.showBubbleDateTime && !bubbleData.useCustomDateTimeLabel)
+                    
+                        if (component.date && bubbleData.showBubbleDateTime && !bubbleData.useCustomDateTimeLabel  && !MXKAppSettings.standardAppSettings.isBubbleStyle)
                         {
+                            
                             UILabel *dateTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, component.position.y, self.bubbleInfoContainer.frame.size.width , 15)];
                             
                             dateTimeLabel.text = [bubbleData.eventFormatter dateStringFromDate:component.date withTime:YES];
+
                             if (bubbleData.isIncoming)
                             {
-                                dateTimeLabel.textAlignment = NSTextAlignmentRight;
+                                dateTimeLabel.textAlignment = NSTextAlignmentLeft;
+                                
+                                
                             }
                             else
                             {
-                                dateTimeLabel.textAlignment = NSTextAlignmentLeft;
+                                dateTimeLabel.textAlignment = NSTextAlignmentRight;
+
                             }
                             dateTimeLabel.textColor = [UIColor lightGrayColor];
                             dateTimeLabel.font = [UIFont systemFontOfSize:11];
                             dateTimeLabel.adjustsFontSizeToFitWidth = YES;
                             dateTimeLabel.minimumScaleFactor = 0.6;
-                            
+                            dateTimeLabel.hidden = YES;
                             [dateTimeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+                            
+                            
+      
                             [self.bubbleInfoContainer addSubview:dateTimeLabel];
+                            
                             // Force dateTimeLabel in full width (to handle auto-layout in case of screen rotation)
+                       
                             NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:dateTimeLabel
                                                                                               attribute:NSLayoutAttributeLeading
                                                                                               relatedBy:NSLayoutRelationEqual
@@ -678,6 +702,7 @@ static BOOL _disableLongPressGestureOnEvent;
                             }
                             
                             timeLabelOffset += 15;
+                         
                         }
                         
                         if (bubbleData.showBubbleReceipts && !bubbleData.useCustomReceipts)
@@ -968,7 +993,7 @@ static BOOL _disableLongPressGestureOnEvent;
         }
         
         // Finalize the row height by adding the top and bottom constraints of the message text view in cell
-        rowHeight += cell.msgTextViewTopConstraint.constant + cell.msgTextViewBottomConstraint.constant + 6;
+        rowHeight += cell.msgTextViewTopConstraint.constant + cell.msgTextViewBottomConstraint.constant + 8;
     }
     
     return rowHeight;
@@ -1078,7 +1103,7 @@ static BOOL _disableLongPressGestureOnEvent;
     [self resetConstraintsConstantToDefault];
     
     if (_temperaryContentViewConstraints) {
-        [self.contentView removeConstraints:_temperaryContentViewConstraints];
+//        [self.contentView removeConstraints:_temperaryContentViewConstraints];
         [_temperaryContentViewConstraints removeAllObjects];
     }
 }
